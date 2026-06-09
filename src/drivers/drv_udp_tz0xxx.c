@@ -59,19 +59,6 @@ struct t_series_udp_priv {
     size_t rx_len;
 };
 
-/**
- * @brief T 系列吊舱 UDP 配置
- * @note  适用于协议文档中的单次请求式 UDP 控制。
- */
-typedef struct {
-    const char *bind_ip;
-    uint16_t bind_port;
-    const char *device_ip;
-    uint16_t device_port;
-    float resend_period_s;
-} gimbal_udp_config_t;
-
-
 static int16_t le16_to_s16(const uint8_t *buf) {
     return (int16_t)((uint16_t)buf[0] | ((uint16_t)buf[1] << 8));
 }
@@ -602,4 +589,4 @@ static struct gimbal_dev *t_series_udp_create(const char *name, void *args) {
     return dev;
 }
 
-REGISTER_GIMBAL_DRIVER("drv_udp_TZ0xxx", t_series_udp_create)
+REGISTER_GIMBAL_DRIVER("drv_udp_tz0xxx", t_series_udp_create)

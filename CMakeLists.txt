@@ -16,7 +16,10 @@ set(GIMBAL_CORE_SOURCES
 )
 
 set(GIMBAL_DRIVER_SOURCES "")
-set(_default_drivers "drv_udp_TZ0xxx")
+set(_default_drivers
+    drv_udp_tz0xxx
+    drv_udp_c12
+)
 
 if(DEFINED SROBOTIS_CONTROL_GIMBAL_ENABLED_DRIVERS)
     set(_drivers "${SROBOTIS_CONTROL_GIMBAL_ENABLED_DRIVERS}")
@@ -59,6 +62,7 @@ if(BUILD_TESTS)
     add_executable(test_gimbal_udp test/test_gimbal_udp.c)
     target_link_libraries(test_gimbal_udp PRIVATE gimbal Threads::Threads m)
     set_target_properties(test_gimbal_udp PROPERTIES BUILD_RPATH "$ORIGIN")
+
     install(TARGETS test_gimbal_udp
         RUNTIME DESTINATION bin
     )

@@ -57,13 +57,25 @@ typedef struct {
 
 /**
  * @brief 相机缩放方向
- * @note  当前 T 系列驱动映射为可见光变倍命令 (45H)
+ * @note  T 系列驱动映射为可见光变倍命令 (45H)，C12 驱动映射为数码变焦命令 (DZM)
  */
 typedef enum {
     GIMBAL_ZOOM_STOP = 0,
     GIMBAL_ZOOM_IN,
     GIMBAL_ZOOM_OUT,
 } gimbal_zoom_dir_t;
+
+/**
+ * @brief UDP 驱动配置
+ * @note  传给 gimbal_alloc_udp() 的 args；传 NULL 时由具体驱动使用默认配置。
+ */
+typedef struct {
+    const char *bind_ip;
+    uint16_t bind_port;
+    const char *device_ip;
+    uint16_t device_port;
+    float resend_period_s;
+} gimbal_udp_config_t;
 
 
 /* ==========================================================================
@@ -78,7 +90,7 @@ struct gimbal_dev;
 
 /**
  * @brief 创建云台实例
- * @param driver_name e.g., "drv_udp_TZ0xxx.c"
+ * @param driver_name e.g., "drv_udp_tz0xxx" / "drv_udp_c12"
  * @param args        UDP 驱动使用 gimbal_udp_config_t；传 NULL 则使用默认配置
  */
 struct gimbal_dev *gimbal_alloc_udp(const char *driver_name, void *args);
